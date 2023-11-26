@@ -37,6 +37,14 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Todo txt
+todo.txt
+
+# Model weights and images
+*.pth
+*.jpg
+*.png
+
 # Unit test / coverage reports
 htmlcov/
 .tox/

@@ -12,4 +12,4 @@ def get_response(message: str) -> str:
     if p_message == "!help":
         return '`This is a help message that you can modify.`'
     
-    return "I did not understand that message!"
+    return None
