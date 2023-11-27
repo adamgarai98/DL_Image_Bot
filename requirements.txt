@@ -1,6 +1,6 @@
-discord
 torch
 torchvision
+discord
 opencv-python
 pycocotools
 matplotlib
