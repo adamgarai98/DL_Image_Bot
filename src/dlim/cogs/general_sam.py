@@ -1,8 +1,11 @@
 """
 Top comment
 """
+import gc
 import os
+import platform
 import sys
+import time
 import urllib.request
 
 import cv2
@@ -47,17 +50,23 @@ class GeneralSam(commands.Cog):
         """
         try:
             await ctx.send("Loading SAM")
+            if self.mask_generator:
+                await ctx.send("Reloading SAM and running garbage collection")
+                self.mask_generator = None
+                gc.collect()
+                await ctx.send("Garbage collection done")
             sam_checkpoint = "/code/src/dlim/cogs/Model_Checkpoints/sam_vit_h_4b8939.pth"
             model_type = "vit_h"
-
             device = "cuda"
-
             sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
             sam.to(device=device)
             # def batch size 32
             self.mask_generator = SamAutomaticMaskGenerator(model=sam, points_per_batch=batch_size)
+
             await ctx.send(f"Loaded SAM on device: {device}")
+            await print(f"Loaded SAM on device: {device}")
         except Exception as e:
+            await print(e)
             await ctx.send(e)
             return
 
@@ -141,6 +150,11 @@ class GeneralSam(commands.Cog):
             with open("/code/src/dlim/images/racoon_in_suit.jpg", "rb") as f:
                 picture = discord.File(f)
                 await ctx.send(torch.cuda.is_available())
+                await ctx.send("Python version")
+                await ctx.send(sys.version)
+                await ctx.send("Version info.")
+                await ctx.send(sys.version_info)
+                # await ctx.send(platform.python_build())
                 await ctx.send(file=picture)
         except Exception as e:
             await ctx.send(e)

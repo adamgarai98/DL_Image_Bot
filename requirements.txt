@@ -4,5 +4,6 @@ discord
 opencv-python
 pycocotools
 matplotlib
+python-dotenv
 
 git+https://github.com/facebookresearch/segment-anything.git
